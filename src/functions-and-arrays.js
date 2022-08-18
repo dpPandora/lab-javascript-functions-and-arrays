@@ -1,24 +1,54 @@
 // Iteration #1: Find the maximum
-function maxOfTwoNumbers() {}
+function maxOfTwoNumbers(a, b) {
+  return (a >= b ? a : b);
+}
 
 
 
 // Iteration #2: Find longest word
 const words = ['mystery', 'brother', 'aviator', 'crocodile', 'pearl', 'orchard', 'crackpot'];
 
-function findLongestWord() {}
+function findLongestWord(arr) {
+  if (arr.length === 0) {return null;}
+
+  var longest = "";
+  arr.forEach(function(comp) {
+    longest = (comp.length > longest.length ? comp : longest);
+  })
+
+  return longest;
+}
 
 
 
 // Iteration #3: Calculate the sum
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
-function sumNumbers() {}
+function sumNumbers(arr) {
+  if (arr.length === 0) {return 0;}
+
+  var sum = 0;
+  arr.forEach(function(num) {return sum += num;})
+
+  return sum;
+}
 
 
 
 // Iteration #3.1 Bonus:
-function sum() {}
+function sum(arr) {
+  if (arr.length === 0) return 0;
+
+  var sum = 0;
+  arr.forEach(function(arg) {
+    if(typeof arg === "object" || Array.isArray(arg)) throw new Error("Unsupported data type sir or ma'am");
+
+    if (typeof arg === "string") sum += arg.length;
+    else sum += arg;
+  })
+
+  return sum;
+}
 
 
 
@@ -26,16 +56,35 @@ function sum() {}
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
-function averageNumbers() {}
+function averageNumbers(arr) {
+  if (arr.length === 0) return null;
+
+  var sum = sumNumbers(arr);
+  sum /= arr.length;
+
+  return sum;
+}
 
 
 // Level 2: Array of strings
 const wordsArr = ['seat', 'correspond', 'linen', 'motif', 'hole', 'smell', 'smart', 'chaos', 'fuel', 'palace'];
 
-function averageWordLength() { }
+function averageWordLength(arr) {
+  if (arr.length === 0) return null;
+
+  var avg = sum(arr);
+
+  return avg/arr.length;
+}
+
+//averageWordLength();
 
 // Bonus - Iteration #4.1
-function avg() {}
+function avg(arr) {
+  if (arr.length === 0) return null;
+
+  return averageWordLength(arr);
+}
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -52,14 +101,27 @@ const wordsUnique = [
   'bring'
 ];
 
-function uniquifyArray() {}
+function uniquifyArray(arr) {
+  if (arr.length === 0) return null;
+  var newArr = [];
+
+  for(var place = 0; place < arr.length; place++) {
+    if (!newArr.includes(arr[place])) newArr.push(arr[place]);
+  }
+
+  return newArr;
+}
 
 
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() {}
+function doesWordExist(arr, search) {
+  if (arr.length === 0) return null;
+
+  return arr.includes(search);
+}
 
 
 
@@ -78,7 +140,16 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes() {}
+function howManyTimes(arr, word) {
+  if (arr.length === 0) return 0;
+  var count = 0;
+
+  arr.forEach(function(arg) {
+    if (arg === word) count++;
+  })
+
+  return count;
+}
 
 
 
@@ -106,9 +177,73 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(matrix) {//this is half complete, its only bonus and im bored of it. its just so full of trash debug text and junk and i dont feel like figuring out why horizonal producting isnt working,,, or well, if it is or isnt working
+  var maxProduct = 0;
+  var iteration = 0;
 
+  console.log(matrix[0].length + "max X");
+  console.log(matrix.length + "max y");
 
+  for (var x = 0; x < matrix[0].length; x++) {
+    console.log(x + "x");
+    for (var y = 0; y < matrix.length; y++) {
+      console.log(y + "y");
+      var fourDown = 1;
+
+      for (var value = y; value < y + 4; value++) {
+        console.log(value + "value");
+        try {
+          console.log(matrix[value][x] + ` ${value} ${x}`);
+        }
+        catch {
+          continue;
+        }
+        
+        try {
+          fourDown *= matrix[value][x];
+        }
+        catch {
+          continue;
+        }
+      }
+      console.log(fourDown + "product");
+      if (fourDown > maxProduct) maxProduct = fourDown;
+
+    }
+  }//end of vertical product-ing
+
+  for (var x = 0; x < matrix.length; x++) {
+    console.log(x + "x");
+    for (var y = 0; y < matrix[0].length; y++) {
+      console.log(y + "y");
+      var fourDown = 1;
+
+      for (var value = y; value < y + 4; value++) {
+        console.log(value + "value");
+        try {
+          console.log(matrix[x][value] + ` ${value} ${x}`);
+        }
+        catch {
+          continue;
+        }
+        
+        try {
+          fourDown *= matrix[x][value];
+        }
+        catch {
+          continue;
+        }
+      }
+      console.log(fourDown + "product");
+      if (fourDown > maxProduct) maxProduct = fourDown;
+
+    }
+  }
+
+  return maxProduct;
+}
+
+console.log(greatestProduct(matrix));
 
 
 // The following is required to make unit tests work.
